@@ -27,6 +27,13 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+
+    if isinstance(message.channel, discord.channel.DMChannel):
+        if message.author == message.channel.recipient:
+            print(f"{message.author.name}#{message.author.discriminator}: {message.content}")
+        else:
+            print(f"{message.author.name}#{message.author.discriminator} => {message.channel.recipient.name}#{message.channel.recipient.discriminator}: {message.content}")
+
     await bot.process_commands(message)
 
     if message.author == bot.user:
@@ -34,9 +41,6 @@ async def on_message(message):
 
     if message.content == "bot?":
         await message.channel.send("Beep Boop")
-
-    if message.content.startswith('+hello'):
-        await message.channel.send('Hello!')
 
 # # Temporaily Disabled Until Functional:
 # @bot.command()
@@ -76,10 +80,18 @@ async def echo(ctx, *args):
 @bot.command()
 async def kill(ctx):
     if str(ctx.author.id) in ADMINS.keys():
-        await ctx.channel.send("*I will rise again* :skull:")
+        await ctx.channel.send("**I will rise again** :skull:")
         raise SystemExit
     else:
-        await ctx.channel.send("I'm sorry my child, you're not close enough with chemsus to use this command")
+        await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
+
+@bot.command()
+async def dm(ctx, member: discord.Member, *, content):
+    if str(ctx.author.id) in ADMINS.keys():
+        channel = await member.create_dm()
+        await channel.send(content)
+    else:
+        await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
 
 @bot.command()
 async def whoami(ctx):
@@ -91,18 +103,19 @@ async def whoami(ctx):
 @bot.command()
 async def admins(ctx):
     if ADMINS == {}:
-        await ctx.channel.send("There are currently no Robot Chemsus admins, check that admins.json loaded correctly.")
-    output = "The current Robot Chemsus admins are: "
-    i = 1
-    for adminID in ADMINS.keys():
-        if i != 1:
-            output += ", "
-            if i == len(ADMINS.keys()):
-                output += "& "
-        output += "\""
-        output += str(await bot.fetch_user(adminID))
-        output += "\""
-        i += 1
-    await ctx.channel.send(output)
+        await ctx.channel.send("There are currently no Robot Chemsus admins, check that `admins.json` loaded correctly.")
+    else:
+        output = "The current Robot Chemsus admins are: "
+        i = 1
+        for adminID in ADMINS.keys():
+            if i != 1:
+                output += ", "
+                if i == len(ADMINS.keys()):
+                    output += "& "
+            output += "\""
+            output += str(await bot.fetch_user(adminID))
+            output += "\""
+            i += 1
+        await ctx.channel.send(output)
 
 bot.run(DISCORD_TOKEN)
