@@ -1,6 +1,12 @@
 import discord
-import json
 from discord.ext import commands
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+
+# import json
 
 bot = commands.Bot(command_prefix='$')
 
@@ -55,4 +61,4 @@ async def echo(ctx, *args):
             output += " "
         await ctx.channel.send(output)
 
-bot.run("ODcxMTU3MTA0NjM4MDY2NzUx.YQXORw.u7owINfM7P7mlm9O29rWOW9GvCc")
+bot.run(DISCORD_TOKEN)
