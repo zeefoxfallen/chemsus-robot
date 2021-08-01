@@ -1,18 +1,28 @@
 import discord
 from discord.ext import commands
+import json
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
-# import json
+adminsFile = open("{}/admins.json".format(os.path.dirname(__file__),"rt"))
+adminsFilsStr = adminsFile.read()
+adminsFile.close()
+ADMIN_DICT = json.loads(adminsFilsStr)
+del adminsFilsStr
+ADMIN_LIST = []
+for key in ADMIN_DICT.keys():
+    ADMIN_LIST.append(ADMIN_DICT[key])
 
 bot = commands.Bot(command_prefix='$')
 
 @bot.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(bot))
+    print('\"{0.user}\" is online in the following server(s):'.format(bot))
+    for guild in bot.guilds:
+        print(' - \"{}\" (id: {})'.format(guild.name,guild.id))
 
 @bot.event
 async def on_message(message):
@@ -60,5 +70,21 @@ async def echo(ctx, *args):
             output += str(arg)
             output += " "
         await ctx.channel.send(output)
+
+@bot.command()
+async def kill(ctx):
+    if ctx.author.id in ADMIN_LIST:
+        await ctx.channel.send("*I will rise again* :skull:")
+        raise SystemExit
+    else:
+        await ctx.channel.send("I'm sorry my child, you're not close enough with chemsus to use this command")
+
+
+@bot.command()
+async def whoami(ctx):
+    username = ctx.author.name
+    userid = ctx.author.id
+    print("[whoami] Name: \"{}\" ID: \"{}\"".format(username,userid))
+    await ctx.channel.send("You, my child are \"{}\"".format(username))
 
 bot.run(DISCORD_TOKEN)
