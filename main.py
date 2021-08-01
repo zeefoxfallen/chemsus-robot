@@ -7,14 +7,15 @@ from dotenv import load_dotenv
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
-adminsFile = open("{}/admins.json".format(os.path.dirname(__file__),"rt"))
-adminsFilsStr = adminsFile.read()
-adminsFile.close()
-ADMIN_DICT = json.loads(adminsFilsStr)
-del adminsFilsStr
-ADMIN_LIST = []
-for key in ADMIN_DICT.keys():
-    ADMIN_LIST.append(ADMIN_DICT[key])
+try:
+    adminsFile = open("{}/admins.json".format(os.path.dirname(__file__),"rt"))
+    adminsFilsStr = adminsFile.read()
+    adminsFile.close()
+    ADMINS = json.loads(adminsFilsStr)
+    del adminsFilsStr
+except FileNotFoundError:
+    print("!!! \"admins.json\" not found, admin commands disabled !!!")
+    ADMINS = {}
 
 bot = commands.Bot(command_prefix='$')
 
@@ -62,6 +63,7 @@ async def on_message(message):
 
 @bot.command()
 async def echo(ctx, *args):
+    print(args)
     if args == ():
         await ctx.channel.send(":zipper_mouth:")
     else:
@@ -73,12 +75,11 @@ async def echo(ctx, *args):
 
 @bot.command()
 async def kill(ctx):
-    if ctx.author.id in ADMIN_LIST:
+    if str(ctx.author.id) in ADMINS.keys():
         await ctx.channel.send("*I will rise again* :skull:")
         raise SystemExit
     else:
         await ctx.channel.send("I'm sorry my child, you're not close enough with chemsus to use this command")
-
 
 @bot.command()
 async def whoami(ctx):
@@ -86,5 +87,22 @@ async def whoami(ctx):
     userid = ctx.author.id
     print("[whoami] Name: \"{}\" ID: \"{}\"".format(username,userid))
     await ctx.channel.send("You, my child are \"{}\"".format(username))
+
+@bot.command()
+async def admins(ctx):
+    if ADMINS == {}:
+        await ctx.channel.send("There are currently no Robot Chemsus admins, check that admins.json loaded correctly.")
+    output = "The current Robot Chemsus admins are: "
+    i = 1
+    for adminID in ADMINS.keys():
+        if i != 1:
+            output += ", "
+            if i == len(ADMINS.keys()):
+                output += "& "
+        output += "\""
+        output += str(await bot.fetch_user(adminID))
+        output += "\""
+        i += 1
+    await ctx.channel.send(output)
 
 bot.run(DISCORD_TOKEN)
