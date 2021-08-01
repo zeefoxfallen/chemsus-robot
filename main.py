@@ -2,6 +2,8 @@ import discord
 import json
 from discord.ext import commands
 client = discord.Client()
+client = commands.bot(command_prefix="+")
+
 
 @client.event
 async def on_ready():
