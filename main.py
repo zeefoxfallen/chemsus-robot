@@ -1,27 +1,17 @@
 import discord
 from discord.ext import commands
-import json
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-
-try:
-    adminsFile = open("{}/admins.json".format(os.path.dirname(__file__),"rt"))
-    adminsFilsStr = adminsFile.read()
-    adminsFile.close()
-    ADMINS = json.loads(adminsFilsStr)
-    del adminsFilsStr
-except FileNotFoundError:
-    print("!!! \"admins.json\" not found, admin commands disabled !!!")
-    ADMINS = {}
+ADMINS = os.getenv("ADMINS").split(":")
 
 bot = commands.Bot(command_prefix='$')
 
 @bot.event
 async def on_ready():
-    print('\"{0.user}\" is online in the following server(s):'.format(bot))
+    print('\"{0.user}\" is online in the following guild(s):'.format(bot))
     for guild in bot.guilds:
         print(' - \"{}\" (id: {})'.format(guild.name,guild.id))
 
@@ -84,10 +74,11 @@ async def kill(ctx):
         raise SystemExit
     else:
         await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
+        
 
 @bot.command()
 async def dm(ctx, member: discord.Member, *, content):
-    if str(ctx.author.id) in ADMINS.keys():
+    if str(ctx.author.id) in ADMINS:
         channel = await member.create_dm()
         await channel.send(content)
     else:
@@ -102,15 +93,15 @@ async def whoami(ctx):
 
 @bot.command()
 async def admins(ctx):
-    if ADMINS == {}:
-        await ctx.channel.send("There are currently no Robot Chemsus admins, check that `admins.json` loaded correctly.")
+    if ADMINS == []:
+        await ctx.channel.send("There are currently no loaded Robot Chemsus admins.")
     else:
         output = "The current Robot Chemsus admins are: "
         i = 1
-        for adminID in ADMINS.keys():
+        for adminID in ADMINS:
             if i != 1:
                 output += ", "
-                if i == len(ADMINS.keys()):
+                if i == len(ADMINS):
                     output += "& "
             output += "\""
             output += str(await bot.fetch_user(adminID))
