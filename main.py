@@ -2,15 +2,19 @@ import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
+import time
 
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 ADMINS = os.getenv("ADMINS").split(":")
 
 bot = commands.Bot(command_prefix='$')
+starttime = 0
 
 @bot.event
 async def on_ready():
+    global starttime
+    starttime = time.time()
     print('\"{0.user}\" is online in the following guild(s):'.format(bot))
     for guild in bot.guilds:
         print(' - \"{}\" (id: {})'.format(guild.name,guild.id))
@@ -108,5 +112,10 @@ async def admins(ctx):
             output += "\""
             i += 1
         await ctx.channel.send(output)
+
+@bot.command()
+async def uptime(ctx):
+    global starttime
+    await ctx.channel.send(f"the bot has been online for {round(((time.time() - starttime) / 60),3)} minutes")
 
 bot.run(DISCORD_TOKEN)
