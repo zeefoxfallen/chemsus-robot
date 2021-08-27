@@ -73,7 +73,7 @@ async def echo(ctx, *args):
 
 @bot.command()
 async def kill(ctx):
-    if str(ctx.author.id) in ADMINS.keys():
+    if str(ctx.author.id) in ADMINS:
         await ctx.channel.send("**I will rise again** :skull:")
         raise SystemExit
     else:
