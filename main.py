@@ -113,9 +113,11 @@ async def admins(ctx):
             i += 1
         await ctx.channel.send(output)
 
-@bot.command()
+# @bot.command()
 async def uptime(ctx):
     global starttime
     await ctx.channel.send(f"the bot has been online for {round(((time.time() - starttime) / 60),3)} minutes")
+
+uptime = bot.command(uptime)
 
 bot.run(DISCORD_TOKEN)
