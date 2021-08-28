@@ -1,45 +1,27 @@
-import discord
-from discord.ext import commands
-import os
-from dotenv import load_dotenv
+
+# import packages
+from discord.ext import commands as discordcmds
 import time
 
-import commandsf
+# import loacl files
+import commands
+import events
+import values
 
-class botCore():
+# main bot class
+class botCore:
     def __init__(self):
-        global bot
 
-        
+        # initialize bot
+        self.bot = discordcmds.Bot(command_prefix='$')
 
-        load_dotenv()
-        self.DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-        self.ADMINS = os.getenv("ADMINS").split(":")
+        # initialize events and commands
+        events.eventsInit(self.bot)
+        commands.commandsInit(self.bot)
 
-        bot = commands.Bot(command_prefix='$')
+    # on call, set starttime and start bot
+    def START(self,token):
+        values.data["starttime"] = time.time()
+        self.bot.run(token)
 
-        cmds = commandsf.botcommands(bot)
-
-        @bot.event
-        async def on_message(message):
-
-            if isinstance(message.channel, discord.channel.DMChannel):
-                if message.author == message.channel.recipient:
-                    print(f"{message.author.name}#{message.author.discriminator}: {message.content}")
-                else:
-                    print(f"{message.author.name}#{message.author.discriminator} => {message.channel.recipient.name}#{message.channel.recipient.discriminator}: {message.content}")
-
-            await bot.process_commands(message)
-
-            if message.author == bot.user:
-                return
-
-            if message.content == "bot?":
-                await message.channel.send("Beep Boop")
-
-        bot.run(self.DISCORD_TOKEN)
-
-
-if __name__ == '__main__':
-    core = botCore()
 

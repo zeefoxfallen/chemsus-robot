@@ -1,9 +1,25 @@
 
-def init(bot):
+# import packages
+import discord
+import time
+
+# import local files
+import values
+
+# fucntion to check if command author is a guild admin
+async def adminCheck(ctx,sendError=True):
+    if ctx.message.author.guild_permissions.administrator:
+        return True
+    if sendError:
+        await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
+    return False
+
+
+# initialize command functions
+def commandsInit(bot):
 
     @bot.command()
     async def echo(ctx, *args):
-        print(args)
         if args == ():
             await ctx.channel.send(":zipper_mouth:")
         else:
@@ -15,20 +31,16 @@ def init(bot):
 
     @bot.command()
     async def kill(ctx):
-        if str(ctx.author.id) in ADMINS:
+        if await adminCheck(ctx):
             await ctx.channel.send("**I will rise again** :skull:")
             raise SystemExit
-        else:
-            await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
-            
-
+ 
     @bot.command()
     async def dm(ctx, member: discord.Member, *, content):
-        if str(ctx.author.id) in ADMINS:
+        if await adminCheck(ctx):
             channel = await member.create_dm()
             await channel.send(content)
-        else:
-            await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
+            await ctx.channel.send("Sent  :incoming_envelope:")
 
     @bot.command()
     async def whoami(ctx):
@@ -38,24 +50,6 @@ def init(bot):
         await ctx.channel.send("You, my child are \"{}\"".format(username))
 
     @bot.command()
-    async def admins(ctx):
-        if ADMINS == []:
-            await ctx.channel.send("There are currently no loaded Robot Chemsus admins.")
-        else:
-            output = "The current Robot Chemsus admins are: "
-            i = 1
-            for adminID in ADMINS:
-                if i != 1:
-                    output += ", "
-                    if i == len(ADMINS):
-                        output += "& "
-                output += "\""
-                output += str(await bot.fetch_user(adminID))
-                output += "\""
-                i += 1
-            await ctx.channel.send(output)
-
-    @bot.command()
     async def uptime(ctx):
-        global starttime
-        await ctx.channel.send(f"the bot has been online for {round(((time.time() - starttime) / 60),3)} minutes")
+        uptime = round(((time.time() - values.data.get("starttime")) / 60),3)
+        await ctx.channel.send(f"the bot has been online for {uptime} minutes")
