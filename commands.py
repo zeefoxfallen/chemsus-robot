@@ -3,7 +3,7 @@
 import discord
 import time
 
-# import local files
+# import local modules
 import values
 
 # fucntion to check if command author is a guild admin
@@ -51,5 +51,5 @@ def commandsInit(bot):
 
     @bot.command()
     async def uptime(ctx):
-        uptime = round(((time.time() - values.data.get("starttime")) / 60),3)
+        uptime = round(((time.time() - values.data.get("starttime-unix")) / 60),3)
         await ctx.channel.send(f"the bot has been online for {uptime} minutes")
