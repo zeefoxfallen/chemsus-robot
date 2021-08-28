@@ -5,15 +5,17 @@ import time
 
 # import local modules
 import values
+import logs
 
 # fucntion to check if command author is a guild admin
 async def adminCheck(ctx,sendError=True):
     if ctx.message.author.guild_permissions.administrator:
+        logs.log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} successfully used command \"{ctx.invoked_with}\".")
         return True
     if sendError:
         await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
+    logs.log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} tried to use command \"{ctx.invoked_with}\" in  and was blocked.")
     return False
-
 
 # initialize command functions
 def commandsInit(bot):
@@ -40,7 +42,7 @@ def commandsInit(bot):
         if await adminCheck(ctx):
             channel = await member.create_dm()
             await channel.send(content)
-            await ctx.channel.send("Sent  :incoming_envelope:")
+            await ctx.channel.send(f"Sent \"{content}\" to {member.name}#{member.discriminator} :incoming_envelope:")
 
     @bot.command()
     async def whoami(ctx):
