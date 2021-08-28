@@ -4,7 +4,6 @@ if __name__ == '__main__':
     # import packages
     from dotenv import load_dotenv
     import os
-    import pathlib
 
     # change working directory to the directory where this file is located
     os.chdir(os.path.dirname(__file__))

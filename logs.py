@@ -19,7 +19,7 @@ def log(dir,filename,content):
         logfile.write(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {content}\n")
 
 
-def dmLog(bot,message):
+def dmLog(message):
     author = message.author
     recipient = message.channel.recipient
     content = message.content
@@ -28,6 +28,3 @@ def dmLog(bot,message):
         print(f"[DM] {author.name}#{author.discriminator}: {content}")
     else:
         print(f"[DM] {author.name}#{author.discriminator} => {recipient.name}#{recipient.discriminator}: {content}")
-
-def guildLog():
-    pass

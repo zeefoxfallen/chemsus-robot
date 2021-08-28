@@ -8,7 +8,6 @@ import datetime
 import commands
 import events
 import values
-import logs
 
 # main bot class
 class botCore:

@@ -12,7 +12,7 @@ def eventsInit(bot):
     async def on_message(message):
 
         if isinstance(message.channel, discord.channel.DMChannel):
-            logs.dmLog(bot,message)
+            logs.dmLog(message)
 
         await bot.process_commands(message)
 
