@@ -1,8 +1,16 @@
 
+# local enviroment files
 .env
-.venv
 
+# python compiled bytecode files
 *.pyc
 *.pyo
 
+# directory exclusions
+__pycache__
+.venv
 logs
+
+# editor data exlusions
+.vscode
+.vs
