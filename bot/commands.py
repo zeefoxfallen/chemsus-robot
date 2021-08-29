@@ -35,6 +35,7 @@ def commandsInit(bot):
     async def kill(ctx):
         if await adminCheck(ctx):
             await ctx.channel.send("**I will rise again** :skull:")
+            await ctx.bot.close()
             raise SystemExit
  
     @bot.command()
