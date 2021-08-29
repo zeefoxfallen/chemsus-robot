@@ -14,7 +14,7 @@ async def adminCheck(ctx,sendError=True):
         return True
     if sendError:
         await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
-    logs.log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} tried to use command \"{ctx.invoked_with}\" in  and was blocked.")
+    logs.log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} tried to use command \"{ctx.invoked_with}\" and was blocked.")
     return False
 
 # initialize command functions
