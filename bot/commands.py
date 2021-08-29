@@ -61,12 +61,12 @@ def commandsInit(bot):
 
     @bot.command()
     async def coinflip(ctx):
-        coinfval = random(1,2)
+        coinfval = random.randint(1,2)
         await ctx.channel.send("flipping the coin...")
         time.sleep(1)
-        if coinfval == "1":
+        if coinfval == 1:
             await ctx.channel.send("the coin is heads")
-        elif coinfval == "2":
+        elif coinfval == 2:
             await ctx.channel.send("the coin is tails")
         else:
-            await ctx.channel.send("coin is not flipping")
+            await ctx.channel.send("the coin landed on it's side")
