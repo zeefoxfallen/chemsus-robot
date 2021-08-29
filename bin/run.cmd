@@ -9,4 +9,3 @@ python ..\bot\main.py
 call ..\.venv\Scripts\deactivate.bat
 
 popd
-
