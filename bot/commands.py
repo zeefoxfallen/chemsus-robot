@@ -6,6 +6,8 @@ import time
 # import local modules
 import values
 import logs
+import random
+import time
 
 # fucntion to check if command author is a guild admin
 async def adminCheck(ctx,sendError=True):
@@ -56,3 +58,15 @@ def commandsInit(bot):
     async def uptime(ctx):
         uptime = round(((time.time() - values.data.get("starttime-unix")) / 60),3)
         await ctx.channel.send(f"the bot has been online for {uptime} minutes")
+
+    @bot.command()
+    async def coinflip(ctx):
+        coinfval = random(1,2)
+        await ctx.channel.send("flipping the coin...")
+        time.sleep(1)
+        if coinfval == "1":
+            await ctx.channel.send("the coin is heads")
+        elif coinfval == "2":
+            await ctx.channel.send("the coin is tails")
+        else:
+            await ctx.channel.send("coin is not flipping")
