@@ -16,7 +16,7 @@ async def adminCheck(ctx,sendError=True):
         return True
     if sendError:
         await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
-    logs.log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} tried to use command \"{ctx.invoked_with}\" and was blocked.")
+        logs.log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} tried to use command \"{ctx.invoked_with}\" and was blocked.")
     return False
 
 # initialize command functions
@@ -61,12 +61,15 @@ def commandsInit(bot):
 
     @bot.command()
     async def coinflip(ctx):
-        coinfval = random.randint(1,2)
+        if await adminCheck(ctx,sendError=False):
+            coinfval = random.randint(0,21)
+        else:
+            coinfval = random.randint(0,20)
         await ctx.channel.send("flipping the coin...")
-        time.sleep(1)
-        if coinfval == 1:
+        # time.sleep(0.5)
+        if coinfval < 10:
             await ctx.channel.send("the coin is heads")
-        elif coinfval == 2:
+        elif coinfval < 20:
             await ctx.channel.send("the coin is tails")
         else:
             await ctx.channel.send("the coin landed on it's side")
