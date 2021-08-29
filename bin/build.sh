@@ -2,9 +2,15 @@
 
 pushd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null
 
-python3 -m venv --prompt "chemsus-robot .venv" ../.venv
+venvLocation=../.venv
 
-source ../.venv/bin/activate 
+if [ -d "$venvLocation" ] ; then
+    rm -rf "$venvLocation" 
+fi
+
+python3 -m venv --prompt "chemsus-robot .venv" "$venvLocation"
+
+source "$venvLocation/bin/activate"
 
 python3 -m pip install --upgrade pip 
 

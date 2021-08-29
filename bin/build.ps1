@@ -1,8 +1,15 @@
 ﻿Push-Location -Path $PSScriptRoot
 
-python -m venv --prompt "chemsus-robot .venv" ..\.venv
+$venvLocation = "..\.venv"
 
-..\.venv\Scripts\Activate.ps1
+if (Test-Path $venvLocation)
+{
+  Remove-Item -Recurse $venvLocation
+}
+
+python -m venv --prompt "chemsus-robot .venv" $venvLocation
+
+& "$venvLocation\Scripts\Activate.ps1"
 
 python -m pip install --upgrade pip
 

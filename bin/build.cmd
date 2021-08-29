@@ -2,6 +2,12 @@
 
 pushd %~dp0
 
+if exist ..\.venv (
+
+rmdir /S /Q ..\.venv
+
+)
+
 python -m venv --prompt "chemsus-robot .venv" ..\.venv
 
 call ..\.venv\Scripts\activate.bat
