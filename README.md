@@ -6,5 +6,5 @@ Chemsus-Robot (also sometimes called 'Robot Chemsus', or just, 'Chemsus') is a d
 - add a gpt conversation system
 - compartmentalize using `discord.ext.commands.cogs`
 - better exception handling
-- improve `$uptime` command
 - add help messages
+- rewrite `adminCheck()` function as function decorator
