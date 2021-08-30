@@ -1,8 +1,7 @@
 
 # import packages
-from discord.ext import commands as discordcmds
-import time
-import datetime
+import discord.ext
+from datetime import datetime
 
 # import local modules
 import commands
@@ -11,19 +10,19 @@ import values
 
 # main bot class
 class botCore:
+
     def __init__(self):
 
         # initialize bot
-        self.bot = discordcmds.Bot(command_prefix='$')
+        self.bot = discord.ext.commands.Bot(command_prefix='$')
 
         # initialize event and command modules
         events.eventsInit(self.bot)
         commands.commandsInit(self.bot)
 
-    # on call, set starttime and start bot
+    # on call, set the start time and start the bot
     def START(self,token):
-        values.data["starttime-human"] = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-        values.data["starttime-unix"] = time.time()
+        values.data["startTime"] = datetime.now()
         self.bot.run(token)
 
 

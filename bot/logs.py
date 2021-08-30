@@ -1,7 +1,7 @@
 
 # import packages
 import pathlib
-import datetime
+from datetime import datetime
 import logging
 
 # import local modules
@@ -23,9 +23,8 @@ def logsInit(bot):
         pathlib.Path(f"../logs/{guild.id}").mkdir(parents=True, exist_ok=True)
 
 def log(dir,filename,content):
-    with open(f"../logs/{dir}/{filename}-{values.data.get('starttime-human')}.log","ta") as logfile:
-        logfile.write(f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]}] {content}\n")
-
+    with open(f"../logs/{dir}/{filename}-{values.data.get('startTime').strftime('%Y%m%d-%H%M%S')}.log","ta") as logfile:
+        logfile.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]}] {content}\n")
 
 def dmLog(message):
     author = message.author
