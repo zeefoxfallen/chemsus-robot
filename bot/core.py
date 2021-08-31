@@ -1,6 +1,6 @@
 
 # import packages
-import discord.ext
+from discord.ext import commands as discordCmds
 from datetime import datetime
 
 # import local modules
@@ -14,7 +14,7 @@ class botCore:
     def __init__(self):
 
         # initialize bot
-        self.bot = discord.ext.commands.Bot(command_prefix='$')
+        self.bot = discordCmds.Bot(command_prefix='$')
 
         # initialize event and command modules
         events.eventsInit(self.bot)
