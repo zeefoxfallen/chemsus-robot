@@ -50,8 +50,8 @@ def commandsInit(bot):
     async def whoami(ctx):
         username = ctx.author.name
         userid = ctx.author.id
-        print("[whoami] Name: \"{}\" ID: \"{}\"".format(username,userid))
-        await ctx.channel.send("You, my child are \"{}\"".format(username))
+        print(f"[whoami] Name: \"{username}\" ID: \"{userid}\"")
+        await ctx.channel.send(f"You, my child are \"{username}\"")
 
     @bot.command()
     async def uptime(ctx):
