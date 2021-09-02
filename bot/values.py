@@ -1,9 +1,31 @@
 
-# dictionary for storing inter-file values
-# (will be used more in future)
-data = {
-    "startTime" : None
-}
+# system for storing inter-file values
+
+data = {}
+
+def addsafe(name,value):
+    if data.has_key(name) == False:
+        data[name] = value
+        return True
+    return False
+
+def add(name,value):
+    data[name] = value
+    return True
+
+def get(name):
+    return data.get(name)
+
+def keys():
+    return data.keys()
+
+
+
+
+    
+
+
+
 
 
 
