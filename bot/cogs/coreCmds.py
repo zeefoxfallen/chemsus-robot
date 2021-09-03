@@ -2,7 +2,7 @@ from discord.ext import commands
 import datetime
 import random 
 
-class commandsCog(commands.Cog):
+class coreCmds(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot

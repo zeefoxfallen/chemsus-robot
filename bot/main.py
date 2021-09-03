@@ -7,8 +7,8 @@ if __name__ == '__main__':
     from datetime import datetime
     import os
 
-    import values
-    from cogs import logCog
+    
+    from cogs import coreUtils, logs
 
     # change working directory to the directory where this file is located
     os.chdir(os.path.dirname(__file__))   
@@ -17,12 +17,14 @@ if __name__ == '__main__':
     load_dotenv()
     DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
-    # initialize bot
+    # initialize bots
     bot = commands.Bot(command_prefix='$')
 
     # initialize cogs
-    bot.add_cog(logCog.logCog(bot))
+    bot.add_cog(coreUtils.coreUtils(bot))
+    bot.add_cog(logs.logs(bot))
+
 
     # start bot
-    values.add("startTime",datetime.now())
+    bot.get_cog('utils').startTime = datetime.now()
     bot.start(DISCORD_TOKEN)

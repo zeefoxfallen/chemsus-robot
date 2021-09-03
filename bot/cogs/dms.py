@@ -1,7 +1,9 @@
+import discord
 from discord.ext import commands
+from datetime import datetime
 
-class utilitiesCog(commands.Cog):
+class dms(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
-        self.logCog = self.bot.get_cog("logCog")
+    

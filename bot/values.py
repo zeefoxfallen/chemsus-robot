@@ -13,10 +13,10 @@ def add(name,value):
     data[name] = value
     return True
 
-def get(name):
+def get(self,name):
     return data.get(name)
 
-def keys():
+def keys(self):
     return data.keys()
 
 

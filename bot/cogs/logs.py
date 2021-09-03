@@ -4,9 +4,7 @@ import pathlib
 import logging
 from datetime import datetime
 
-from .. import values
-
-class logCog(commands.Cog):
+class logs(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
@@ -21,12 +19,12 @@ class logCog(commands.Cog):
 
         # create log directories (if they don't already exist)
         pathlib.Path("../logs/dms").mkdir(parents=True, exist_ok=True)
-        pathlib.Path("../logs/main").mkdir(parents=True, exist_ok=True)
+        # pathlib.Path("../logs/main").mkdir(parents=True, exist_ok=True) # not currently in use
         for guild in bot.guilds:
             pathlib.Path(f"../logs/{guild.id}").mkdir(parents=True, exist_ok=True)
 
     def log(self,dir,filename,content):
-        with open(f"../logs/{dir}/{filename}-{values.get('startTime').strftime('%Y%m%d-%H%M%S')}.log","ta") as logfile:
+        with open(f"../logs/{dir}/{filename}-{self.bot.get_cog('utils').get('startTime').strftime('%Y%m%d-%H%M%S')}.log","ta") as logfile:
             logfile.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]}] {content}\n")
 
     @commands.Cog.listener("on_message")
