@@ -8,9 +8,9 @@ class coreEvents(commands.Cog):
     @commands.Cog.listener("on_message")
     async def on_message(self,message):
 
-        await self.bot.process_commands(message)
+        # await self.bot.process_commands(message)
 
-        if message.author == bot.user:
+        if message.author == self.bot.user:
             return
 
         if message.content == "bot?":
@@ -19,6 +19,8 @@ class coreEvents(commands.Cog):
     @commands.Cog.listener("on_ready")
     async def on_ready(self):
 
-        print('\"{0.user}\" is online in the following guild(s):'.format(bot))
-        for guild in bot.guilds:
+        self.bot.get_cog("logs").postStartInit()
+
+        print(f"\"{self.bot.user}\" is online in the following guild(s):")
+        for guild in self.bot.guilds:
             print(' - \"{}\" (id: {})'.format(guild.name,guild.id))

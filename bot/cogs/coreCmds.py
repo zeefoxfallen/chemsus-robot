@@ -1,5 +1,6 @@
 from discord.ext import commands
-import datetime
+import discord
+from datetime import datetime
 import random 
 
 class coreCmds(commands.Cog):
@@ -10,11 +11,12 @@ class coreCmds(commands.Cog):
     # fucntion to check if command author is a guild admin
     async def adminCheck(self,ctx,sendError=True):
         if ctx.message.author.guild_permissions.administrator:
-            self.bot.get_cog("logCog").log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} successfully used command \"{ctx.invoked_with}\".")
+            if sendError:
+                self.bot.get_cog("logs").log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} successfully used command \"{ctx.invoked_with}\".")
             return True
         if sendError:
             await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
-            self.bot.get_cog("logCog").log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} tried to use command \"{ctx.invoked_with}\" and was blocked.")
+            self.bot.get_cog("logs").log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} tried to use command \"{ctx.invoked_with}\" and was blocked.")
         return False
 
     @commands.command()
@@ -51,7 +53,7 @@ class coreCmds(commands.Cog):
 
     @commands.command()
     async def uptime(self,ctx):
-        uptime = datetime.now() - values.data.get("startTime")
+        uptime = datetime.now() - self.bot.get_cog("coreUtils").values.get("startTime")
         await ctx.channel.send(f"the bot has been online for: `{uptime}` ")
 
     @commands.command()

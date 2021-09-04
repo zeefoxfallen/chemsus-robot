@@ -17,10 +17,11 @@ class logs(commands.Cog):
         handler.setFormatter(logging.Formatter("[{asctime}] {levelname}: {name}: {message}", style="{"))
         logger.addHandler(handler)
 
+    def postStartInit(self):
         # create log directories (if they don't already exist)
         pathlib.Path("../logs/dms").mkdir(parents=True, exist_ok=True)
         # pathlib.Path("../logs/main").mkdir(parents=True, exist_ok=True) # not currently in use
-        for guild in bot.guilds:
+        for guild in self.bot.guilds:
             pathlib.Path(f"../logs/{guild.id}").mkdir(parents=True, exist_ok=True)
 
     def log(self,dir,filename,content):
