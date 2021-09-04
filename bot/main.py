@@ -24,7 +24,6 @@ if __name__ == '__main__':
     bot.add_cog(coreUtils.coreUtils(bot))
     bot.add_cog(logs.logs(bot))
 
-
     # start bot
-    bot.get_cog('utils').startTime = datetime.now()
+    bot.get_cog('coreUtils').values["startTime"] = datetime.now()
     bot.start(DISCORD_TOKEN)

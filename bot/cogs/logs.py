@@ -24,7 +24,7 @@ class logs(commands.Cog):
             pathlib.Path(f"../logs/{guild.id}").mkdir(parents=True, exist_ok=True)
 
     def log(self,dir,filename,content):
-        with open(f"../logs/{dir}/{filename}-{self.bot.get_cog('utils').get('startTime').strftime('%Y%m%d-%H%M%S')}.log","ta") as logfile:
+        with open(f"../logs/{dir}/{filename}-{self.bot.get_cog('coreUtils').values.get('startTime').strftime('%Y%m%d-%H%M%S')}.log","ta") as logfile:
             logfile.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]}] {content}\n")
 
     @commands.Cog.listener("on_message")
@@ -38,5 +38,3 @@ class logs(commands.Cog):
                 print(f"[DM] {author.name}#{author.discriminator}: {content}")
             else:
                 print(f"[DM] {author.name}#{author.discriminator} => {recipient.name}#{recipient.discriminator}: {content}")
-
-
