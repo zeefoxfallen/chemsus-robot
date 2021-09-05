@@ -2,21 +2,31 @@
 if __name__ == '__main__':
 
     # import packages
+    from discord.ext import commands
     from dotenv import load_dotenv
+    from datetime import datetime
     import os
 
-    # change working directory to the directory where this file is located
-    os.chdir(os.path.dirname(__file__))
+    
+    from cogs import coreUtils, coreEvents, coreCmds, logs
 
-    # import loacl modules
-    import core    
+    # change working directory to the directory where this file is located
+    os.chdir(os.path.dirname(__file__))   
 
     # loads .env contaning the auth token
     load_dotenv()
     DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
-    # initialize bot
-    BOT = core.botCore()
+    # initialize bots
+    bot = commands.Bot(command_prefix='$')
+
+    # initialize cogs
+    bot.add_cog(coreUtils.coreUtils(bot))
+    bot.add_cog(coreEvents.coreEvents(bot))
+    bot.add_cog(coreCmds.coreCmds(bot))
+    bot.add_cog(logs.logs(bot))
 
     # start bot
-    BOT.START(DISCORD_TOKEN)
+    bot.get_cog('coreUtils').values["startTime"] = datetime.now()
+    bot.run(DISCORD_TOKEN)
+
