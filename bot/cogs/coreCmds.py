@@ -8,17 +8,6 @@ class coreCmds(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # fucntion to check if command author is a guild admin
-    async def adminCheck(self,ctx,sendError=True):
-        if ctx.message.author.guild_permissions.administrator:
-            if sendError:
-                self.bot.get_cog("logs").log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} successfully used command \"{ctx.invoked_with}\".")
-            return True
-        if sendError:
-            await ctx.channel.send("I'm sorry my child, you're not close enough with Chemsus to use this command")
-            self.bot.get_cog("logs").log(ctx.guild.id,"admin-commands",f"{ctx.author.name}#{ctx.author.discriminator} tried to use command \"{ctx.invoked_with}\" and was blocked.")
-        return False
-
     @commands.command()
     async def echo(self,ctx, *args):
         if args == ():
@@ -32,14 +21,14 @@ class coreCmds(commands.Cog):
 
     @commands.command()
     async def kill(self,ctx):
-        if await self.adminCheck(ctx):
+        if await self.bot.get_cog('coreUtils').adminCheck(ctx):
             await ctx.channel.send("**I will rise again** :skull:")
             await ctx.bot.close()
             raise SystemExit
  
     @commands.command()
     async def dm(self,ctx, member: discord.Member, *, content):
-        if await self.adminCheck(ctx):
+        if await self.bot.get_cog('coreUtils').adminCheck(ctx):
             channel = await member.create_dm()
             await channel.send(content)
             await ctx.channel.send(f"Sent \"{content}\" to {member.name}#{member.discriminator} :incoming_envelope:")
@@ -58,7 +47,7 @@ class coreCmds(commands.Cog):
 
     @commands.command()
     async def coinflip(self,ctx):
-        if await self.adminCheck(ctx,sendError=False):
+        if await self.bot.get_cog('coreUtils').adminCheck(ctx,sendError=False):
             coinfval = random.randint(0,21)
         else:
             coinfval = random.randint(0,20)

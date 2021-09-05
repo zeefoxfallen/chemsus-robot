@@ -6,4 +6,3 @@ Chemsus-Robot (also sometimes called 'Robot Chemsus', or just, 'Chemsus') is a d
 - add a gpt conversation system
 - better exception handling
 - add help messages
-- rewrite `adminCheck()` function as function decorator
