@@ -8,7 +8,7 @@ if __name__ == '__main__':
     import os
 
     
-    from cogs import coreUtils, coreEvents, coreCmds, logs
+    from cogs import coreUtils, coreEvents, coreCmds, logs, gpt2
 
     # change working directory to the directory where this file is located
     os.chdir(os.path.dirname(__file__))   
@@ -25,6 +25,7 @@ if __name__ == '__main__':
     bot.add_cog(coreEvents.coreEvents(bot))
     bot.add_cog(coreCmds.coreCmds(bot))
     bot.add_cog(logs.logs(bot))
+    bot.add_cog(gpt2.gpt2(bot))
 
     # start bot
     bot.get_cog('coreUtils').values["startTime"] = datetime.now()
