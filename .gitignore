@@ -9,6 +9,7 @@
 # directory exclusions
 __pycache__
 .venv
+.venv*
 logs
 
 # editor data exlusions
