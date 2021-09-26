@@ -60,3 +60,28 @@ class coreCmds(commands.Cog):
             await ctx.channel.send("the coin is tails")
         else:
             await ctx.channel.send("the coin landed on it's side")
+
+
+    @commands.command()
+    async def diceroll(self,ctx):
+        if await self.bot.get_cog('coreUtils').adminCheck(ctx,sendError=False):
+            diceval = random.randint(0,61)
+        else:
+            diceval = random.randint(0,60)
+
+        await ctx.channel.send("rolling the dice...")
+
+        if diceval < 10:
+            await ctx.channel.send("the dice is a 1")
+        elif diceval <20:
+            await ctx.channel.send("the dice is a 2")
+        elif diceval <30:
+            await ctx.channel.send("the dice is a 3")
+        elif diceval <40:
+            await ctx.channel.send("the dice is a 4")
+        elif diceval <50:
+            await ctx.channel.send("the dice is a 5")
+        elif diceval <60:
+            await ctx.channel.send("the dice is a 6")
+        else:
+            await ctx.channel.send("the dice shattered when it hit the table")
