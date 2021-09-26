@@ -15,4 +15,8 @@ class sugg(commands.Cog):
             for arg in args:
                 output += str(arg)
                 output += " "
-            await self.bot.get_channel(891745640344871004).send(output)
+            message = await self.bot.get_channel(891745640344871004).send(output)
+            emoji = '\N{THUMBS UP SIGN}'
+            await message.add_reaction(emoji)
+            emoji = '\N{THUMBS DOWN SIGN}'
+            await message.add_reaction(emoji)

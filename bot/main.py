@@ -8,7 +8,7 @@ if __name__ == '__main__':
     import os
 
     
-    from cogs import coreUtils, coreEvents, coreCmds, logs, suggestions
+    from cogs import coreUtils, coreEvents, coreCmds, logs, suggestions, welcome
 
     # change working directory to the directory where this file is located
     os.chdir(os.path.dirname(__file__))   
@@ -26,6 +26,7 @@ if __name__ == '__main__':
     bot.add_cog(coreCmds.coreCmds(bot))
     bot.add_cog(logs.logs(bot))
     bot.add_cog(suggestions.sugg(bot))
+    bot.add_cog(welcome.Welcome(bot))
 
     # start bot
     bot.get_cog('coreUtils').values["startTime"] = datetime.now()
