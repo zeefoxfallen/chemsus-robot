@@ -2,6 +2,7 @@
 if __name__ == '__main__':
 
     # import packages
+    import discord
     from discord.ext import commands
     from dotenv import load_dotenv
     from datetime import datetime
@@ -17,8 +18,12 @@ if __name__ == '__main__':
     load_dotenv()
     DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
-    # initialize bots
-    bot = commands.Bot(command_prefix='$')
+    # setup discord bot intents
+    intents = discord.Intents.default()
+    intents.members = True
+
+    # initialize bot
+    bot = commands.Bot(command_prefix='$',intents=intents)
 
     # initialize cogs
     bot.add_cog(coreUtils.coreUtils(bot))
