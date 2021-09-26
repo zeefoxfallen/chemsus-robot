@@ -7,12 +7,8 @@ class coreEvents(commands.Cog):
 
     @commands.Cog.listener("on_message")
     async def on_message(self,message):
-
-        # await self.bot.process_commands(message)
-
         if message.author == self.bot.user:
             return
-
         if message.content == "bot?":
             await message.channel.send("Beep Boop")
 
