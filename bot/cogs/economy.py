@@ -1,8 +1,9 @@
 #imports
 from discord.ext import commands
+import json
 
 #imports data needed for economy
-from economydata.accounts import accountsl
+
 
 class economy(commands.Cog):
     def __init__(self, bot):
@@ -16,3 +17,6 @@ class economy(commands.Cog):
         else:
             accountsl.append(ctx.author.id)
             await ctx.channel.send("your account has been made")
+
+            with open(f'{self.gamePath}/saves/{self.saveName}.json', 'w', encoding='utf-8') as file:
+                json.dump(saveDict, file, ensure_ascii=False, indent=4)
